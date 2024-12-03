@@ -52,40 +52,36 @@ int	main (int argc, char *argv[])
 		problemDamp = false;
 		while (j < 9 && numberStrings[i][j + 1] != 0)
 		{
-			if (isDecreasing)
+			if (isDecreasing &&
+				(numberStrings[i][j] <= numberStrings[i][j + 1] ||
+				numberStrings[i][j] - numberStrings[i][j + 1] > 3))
 			{
-				if (numberStrings[i][j] <= numberStrings[i][j + 1] ||
-					numberStrings[i][j] - numberStrings[i][j + 1] > 3)
+				if (problemDamp)
 				{
-					if (problemDamp)
-					{
-						totalSafe--;
-						printf("NOT SAFE!");
-						break;
-					}
-					else
-					{
-						problemDamp = true;
-						printf("DAMPENED! ");
-					}
+					totalSafe--;
+					printf("NOT SAFE!");
+					break;
 				}
-			} 
-			else 
-			{
-				if (numberStrings[i][j] >= numberStrings[i][j + 1] ||
-					numberStrings[i][j] - numberStrings[i][j + 1] < -3)
+				else
 				{
-					if (problemDamp)
-					{
-						totalSafe--;
-						printf("NOT SAFE!");
-						break;
-					}
-					else
-					{
-						problemDamp = true;
-						printf("DAMPENED! ");
-					}
+					problemDamp = true;
+					printf("DAMPENED! ");
+				}
+			}
+			else if (!isDecreasing &&
+					(numberStrings[i][j] >= numberStrings[i][j + 1] ||
+					numberStrings[i][j] - numberStrings[i][j + 1] < -3))
+			{
+				if (problemDamp)
+				{
+					totalSafe--;
+					printf("NOT SAFE!");
+					break;
+				}
+				else
+				{
+					problemDamp = true;
+					printf("DAMPENED! ");
 				}
 			}
 			j++;
